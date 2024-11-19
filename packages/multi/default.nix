@@ -20,6 +20,7 @@ build = stdenv.mkDerivation {
 test = stdenv.mkDerivation {
   name = "${name}-test";
   src = ./test;
+  # Could skip the build phase and use check phase instead
   buildInputs = [build c];
   buildPhase = ''
     echo ">>> test a <<<"
@@ -34,7 +35,7 @@ test = stdenv.mkDerivation {
 docs = stdenv.mkDerivation {
   name = "${name}-docs";
   src = ./docs;
-  checkInputs = [build test d];
+  buildInputs = [build test d];
   buildPhase = ''
     echo ">>> build a docs <<<"
   '';
@@ -55,9 +56,6 @@ docs = stdenv.mkDerivation {
 };
 run = stdenv.mkDerivation {
   name = "${name}-run-dependencies";
-  # buildPhase = ''
-  #   echo "gather run time dependencies"
-  # '';
   phases = [ "fixupPhase" ];
   propagatedBuildInputs = [ build b c d ];
 };
