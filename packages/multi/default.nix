@@ -2,11 +2,11 @@
 
 rec
 {
+name = "a";
 build = stdenv.mkDerivation {
-  name = "a";
+  name = name;
   src = ./src;
   buidlInputs = [b];
-  checkInputs = [c];
   buildPhase = ''
     echo ">>> build a <<<"
     sleep 1
@@ -18,7 +18,7 @@ build = stdenv.mkDerivation {
   doCheck = false;
 };
 test = stdenv.mkDerivation {
-  name = "a-test";
+  name = "${name}-test";
   src = ./test;
   buildInputs = [build c];
   buildPhase = ''
@@ -32,7 +32,7 @@ test = stdenv.mkDerivation {
   doCheck = false;
 };
 docs = stdenv.mkDerivation {
-  name = "a-docs";
+  name = "${name}-docs";
   src = ./docs;
   checkInputs = [build test d];
   buildPhase = ''
@@ -52,5 +52,13 @@ docs = stdenv.mkDerivation {
     cp docs $out
   '';
   doCheck = false;
+};
+run = stdenv.mkDerivation {
+  name = "${name}-run-dependencies";
+  # buildPhase = ''
+  #   echo "gather run time dependencies"
+  # '';
+  phases = [ "fixupPhase" ];
+  propagatedBuildInputs = [ build b c d ];
 };
 }
