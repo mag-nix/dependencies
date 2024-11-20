@@ -53,7 +53,7 @@ stdenv.mkDerivation (finalAttrs: {
         cat ${finalAttrs.finalPackage}/hello >> docs
         echo "" >> docs
         echo "> tests" >> docs
-        cat ${finalAttrs.passthru.test}/report >> docs
+        cat ${finalAttrs.passthru.tests}/report >> docs
         echo "" >> docs
         cp docs $out
       '';
