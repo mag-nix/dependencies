@@ -1,5 +1,5 @@
 { stdenv, b, c, d }:
-stdenv.mkDerivation {
+stdenv.mkDerivation (finalAttrs: {
   name = "a";
   src = ./src;
   buidlInputs = [b];
@@ -50,14 +50,14 @@ stdenv.mkDerivation {
         cat docu >> docs
         echo "" >> docs
         echo "> build" >> docs
-        cat ${build}/hello >> docs
+        cat ${finalAttrs.finalPackage}/hello >> docs
         echo "" >> docs
         echo "> tests" >> docs
-        cat ${test}/report >> docs
+        cat ${finalAttrs.passthru.test}/report >> docs
         echo "" >> docs
         cp docs $out
       '';
       doCheck = false;
     };
   };
-}
+})
