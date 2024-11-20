@@ -20,5 +20,15 @@
     packages.x86_64-linux.e = callPackage ./packages/e { };
     packages.x86_64-linux.multi = callPackage ./packages/multi { };
     packages.x86_64-linux.passthru = callPackage ./packages/passthru { };
+
+    function.runtimePackages = { package }:
+      let
+        recurse = package:
+          if pkgs.lib.attrsets.hasAttrByPath [ "passthru" "dependencies" ] package
+            then pkgs.lib.lists.flatten ( [ package ] ++ map (p: recurse p) package.passthru.dependencies )
+            else [ package ];
+      in
+      recurse package
+    ;
   };
 }
