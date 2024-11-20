@@ -25,8 +25,11 @@
       let
         recurse = package:
           if pkgs.lib.attrsets.hasAttrByPath [ "passthru" "dependencies" ] package
-            then [ package ] ++ builtins.concatLists (map (p: recurse p) package.passthru.dependencies)
-            else [ package ];
+            then [ package ]
+              ++ builtins.concatLists (map (p: recurse p) package.passthru.dependencies)
+              ++ builtins.concatLists (map (p: recurse p) package.propagatedBuildInputs)
+            else [ package ]
+              ++ builtins.concatLists (map (p: recurse p) package.propagatedBuildInputs);
       in
       recurse package
     ;

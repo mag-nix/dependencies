@@ -1,6 +1,6 @@
 { stdenv, b, c, d }:
 stdenv.mkDerivation (finalAttrs: {
-  name = "a";
+  name = "passthru";
   src = ./src;
   buidlInputs = [b];
   checkInputs = [];
