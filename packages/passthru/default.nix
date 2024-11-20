@@ -18,7 +18,7 @@ stdenv.mkDerivation {
   doCheck = true;
   passthru = {
     tests = stdenv.mkDerivation {
-      name = "${name}-test";
+      name = "${finalAttrs.name}-test";
       src = ./test;
       # Could skip the build phase and use check phase instead
       buildInputs = [finalAttrs.finalPackage c];
@@ -38,7 +38,7 @@ stdenv.mkDerivation {
       d
     ];
     docs = stdenv.mkDerivation {
-      name = "${name}-docs";
+      name = "${finalAttrs.name}-docs";
       src = ./docs;
       buildInputs = [finalAttrs.finalPackage finalAttrs.passthru.tests d];
       buildPhase = ''
@@ -59,5 +59,5 @@ stdenv.mkDerivation {
       '';
       doCheck = false;
     };
-  }
+  };
 }

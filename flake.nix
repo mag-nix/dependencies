@@ -19,5 +19,6 @@
     packages.x86_64-linux.d = callPackage ./packages/d { };
     packages.x86_64-linux.e = callPackage ./packages/e { };
     packages.x86_64-linux.multi = callPackage ./packages/multi { };
+    packages.x86_64-linux.passthru = callPackage ./packages/passthru { };
   };
 }
