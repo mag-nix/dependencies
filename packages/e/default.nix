@@ -3,7 +3,7 @@
 stdenv.mkDerivation {
   name = "a";
   src = ./src;
-  buidlInputs = [multi.build];
+  buidlInputs = [multi.run];
   checkInputs = [];
   buildPhase = ''
     echo ">>> build ea <<<"
