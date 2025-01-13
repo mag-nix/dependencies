@@ -4,7 +4,7 @@ stdenv.mkDerivation {
   name = "d";
   src = ./src;
   buildPhase = ''
-    echo ">>> build d <<<"
+    echo ">>> build d! <<<"
     sleep 1
   '';
   installPhase = ''

@@ -1,10 +1,11 @@
-{ stdenv, b, c, d }:
+{ stdenv, b, c, d, runtimePackages }:
 
 stdenv.mkDerivation {
   name = "a";
   src = ./src;
-  buidlInputs = [b];
-  checkInputs = [c];
+  # buidlInputs = [b];
+  # checkInputs = [c];
+  buildInputs = runtimePackages b;
   buildPhase = ''
     echo ">>> build a <<<"
     sleep 1

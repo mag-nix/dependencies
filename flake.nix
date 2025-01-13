@@ -20,16 +20,18 @@
     packages.x86_64-linux.e = callPackage ./packages/e { };
     packages.x86_64-linux.multi = callPackage ./packages/multi { };
     packages.x86_64-linux.passthru = callPackage ./packages/passthru { };
+    packages.x86_64-linux.runtimePackages = self.function.runtimePackages;
 
-    function.runtimePackages = { package }:
+    function.runtimePackages = package:
       let
         recurse = package:
           if pkgs.lib.attrsets.hasAttrByPath [ "passthru" "dependencies" ] package
             then pkgs.lib.lists.unique ([ package ]
-              ++ builtins.concatLists (map (p: recurse p) package.propagatedBuildInputs)
+              # ++ builtins.concatLists (map (p: recurse p) package.propagatedBuildInputs)
               ++ builtins.concatLists (map (p: recurse p) package.passthru.dependencies))
-            else pkgs.lib.lists.unique ([ package ]
-              ++ builtins.concatLists (map (p: recurse p) package.propagatedBuildInputs));
+            else [ package ];
+            # else pkgs.lib.lists.unique ([ package ]
+            # ++ builtins.concatLists (map (p: recurse p) package.propagatedBuildInputs));
       in
       recurse package
     ;
